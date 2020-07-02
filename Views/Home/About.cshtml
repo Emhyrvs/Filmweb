@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Filmweb.Models.EnrollmentDateGroup>
+           
+@{
+    ViewBag.Title = "Movie Body Statistics";
+}
+
+<h2>Movie Body Statistics</h2>
+
+<table>
+    <tr>
+        <th>
+            Director        </th>
+        <th>
+           Movies
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Director)
+        </td>
+        <td>
+            @item.MovieCount
+        </td>
+    </tr>
+}
+</table>

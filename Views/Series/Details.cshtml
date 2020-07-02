@@ -1,0 +1,86 @@
+﻿@model Filmweb.Models.Series
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Series</h4>
+    <hr />
+    <img src="~/Obrazki/@Html.DisplayFor(model => model.Obrazek) " height="200px" width="200px" />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Director)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Director)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Length)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Length)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfSeasons)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfSeasons)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfEpisode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfEpisode)
+        </dd>
+
+
+
+
+
+
+
+        <dd>
+
+        </dd>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Recenzje</th>
+                </tr>
+                @foreach (var item in Model.Reviews)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+
+
+                    </tr>
+                }
+            </table>
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
