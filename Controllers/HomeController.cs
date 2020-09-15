@@ -2,8 +2,7 @@
 using System.Web.Mvc;
 using Filmweb.FilmwebContextt;
 using Filmweb.Models;
-using Filmweb.FilmwebContextt;
-
+using System.Dynamic;
 
 namespace Filmweb.Controllers
 {
@@ -19,7 +18,11 @@ namespace Filmweb.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            dynamic mymodel = new ExpandoObject();
+            mymodel.Series = db.TvSeries.ToList();
+            mymodel.Movies = db.Movies.ToList();
+            return View(mymodel);
+           
         }
 
 

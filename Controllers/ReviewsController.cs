@@ -37,25 +37,54 @@ namespace Filmweb.Controllers
         }
 
         // GET: Reviews/Create
+        
         public ActionResult Create()
         {
             return View();
         }
+        // GET: Reviews/Create/5
+
 
         // POST: Reviews/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Content")] Review review)
+        public ActionResult Create(String id, [Bind(Include = "ID,Title,Content")] Review review)
         {
-            if (ModelState.IsValid)
+            if (id == null)
             {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            }
+            if (id.Contains("series"))
+            {
+                
+                String ids = id.TrimStart("series".ToCharArray());
+                int idm = 0;
+                idm = Int32.Parse(ids);
+
+                Series series = db.TvSeries.Find(idm);
+                series.Reviews.Add(review);
                 db.Reviews.Add(review);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
 
+            }
+            else
+            {
+               
+                String ids = id.TrimStart("movie".ToCharArray());
+                int idm = 0;
+                idm = Int32.Parse(ids);
+
+                Movie movie = db.Movies.Find(idm);
+                movie.Reviews.Add(review);
+                db.Reviews.Add(review);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+
+            }
             return View(review);
         }
 
@@ -115,7 +144,8 @@ namespace Filmweb.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+      
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

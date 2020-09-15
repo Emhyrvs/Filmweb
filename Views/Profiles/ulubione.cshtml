@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Filmweb.Models.Movie>
+@{
+    ViewBag.Title = "ulubione";
+}
+
+<h2>ulubione</h2>
+
+<ul class="actors">
+
+
+@foreach (var item in Model)
+{
+    <li>
+
+        <a href="@Url.Action("Details" + "/" + item.ID, "Movies")">
+            <img class="actor-image" src="~/Obrazki/@item.Obrazek">
+        <a />
+
+            <div class="a-1">
+                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+                @Html.DisplayFor(modelItem => item.Name)
+            </div>
+    </li>
+}
+</ul>
+

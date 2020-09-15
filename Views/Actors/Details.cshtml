@@ -4,15 +4,19 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Szczegóły</h2>
 
 <div>
-    <h4>Actor</h4>
+    <h4>Aktor</h4>
     <hr />
+    <img src="~/Obrazki/@Html.DisplayFor(model => model.Obrazek) " height="200px" width="200px" />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
+        <dd>
+            @Html.DisplayNameFor(model => model.Name)
+        </dd>
 
         <dd>
             @Html.DisplayFor(model => model.Name)
@@ -36,39 +40,48 @@
         <dd>
             <table class="table">
                 <tr>
-                    <th>Recenzje</th>
+                    <th>Filmy w których wystąpił </th>
                 </tr>
                 @foreach (var item in Model.Movies)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                       
-
-                    </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a href="@Url.Action("Details"+"/"+item.ID, "Movies")">
+                        <img class="actor-image" src="~/Obrazki/@item.Obrazek">
+                        <a />
+                </td>
+            </tr>
                 }
             </table>
         </dd>
         <dd>
+           />
             <table class="table">
                 <tr>
-                    <th>Recenzje</th>
+                    <th>Seriale w których wystąpił </th>
                 </tr>
                 @foreach (var item in Model.Series)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        
-                    </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a href="@Url.Action("Details"+"/"+item.ID, "Series")">
+                        <img class="actor-image" src="~/Obrazki/@item.Obrazek">
+                        <a />
+                </td>
+
+            </tr>
                 }
             </table>
         </dd>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edycja ", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Powróć do listy", "Index")
 </p>

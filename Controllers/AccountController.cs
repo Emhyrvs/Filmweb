@@ -12,15 +12,18 @@ using Filmweb.Models;
 using System.Configuration;
 using System.Net.Mail;
 using System.Net;
+using Filmweb.FilmwebContextt;
+using System.Deployment.Internal;
 
 namespace Filmweb.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private FilmwebContext db = new FilmwebContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        
         public AccountController()
         {
         }
@@ -165,7 +168,9 @@ namespace Filmweb.Controllers
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     SendMail(user.Email , "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    int a = db.Profiles.Count();
+                    Profile profile = new Profile { ID = a, UserName = user.Email };
+                    db.Profiles.Add(profile);
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -438,10 +443,13 @@ namespace Filmweb.Controllers
                     _signInManager = null;
                 }
             }
-
+            
             base.Dispose(disposing);
         }
+        
+        
 
+       
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";

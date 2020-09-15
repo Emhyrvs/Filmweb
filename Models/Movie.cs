@@ -16,7 +16,8 @@ namespace Filmweb.Models
         public virtual List<Rate> Rates { get; set; }
         public virtual List<Review> Reviews { get; set; }
         public String Obrazek { get; set; }
-        public int MyProperty { get; set; }
+        public float Rate { get; set; }
+      
 
 
     }

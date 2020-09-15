@@ -1,59 +1,64 @@
-﻿@model Filmweb.Models.Series
+﻿@model Filmweb.Models.Pomocnicza
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Szczegóły </h2>
 
 <div>
-    <h4>Series</h4>
+    <h4>Seriale</h4>
     <hr />
-    <img src="~/Obrazki/@Html.DisplayFor(model => model.Obrazek) " height="200px" width="200px" />
+    <img src="~/Obrazki/@Html.DisplayFor(model => model.series.Obrazek) " height="200px" width="200px" />
     <dl class="dl-horizontal">
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            Nazwa
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.series.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Director)
+            Reżyser
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Director)
+            @Html.DisplayFor(model => model.series.Director)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Length)
+            Długość w minutach
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Length)
+            @Html.DisplayFor(model => model.series.Length)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NumberOfSeasons)
+            Liczba sezonów
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NumberOfSeasons)
+            @Html.DisplayFor(model => model.series.NumberOfSeasons)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NumberOfEpisode)
+            Liczba odcinków
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NumberOfEpisode)
+            @Html.DisplayFor(model => model.series.NumberOfEpisode)
+        </dd>
+        <dd>
+            Ocena
         </dd>
 
 
-
+        <dd>
+            @Html.DisplayFor(model => model.series.Rate)
+        </dd>
 
 
 
@@ -66,11 +71,14 @@
                 <tr>
                     <th>Recenzje</th>
                 </tr>
-                @foreach (var item in Model.Reviews)
+                @foreach (var item in Model.series.Reviews)
                 {
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Content)
                         </td>
 
 
@@ -79,8 +87,40 @@
             </table>
         </dd>
     </dl>
+    Dodaj recenzje
+    <form action="~/Series/Addrecenzje" method="get">
+
+        <input type="text" name="Title" placeholder="super" />
+        <input type="text" name="Content" placeholder="Bardzo ładnie jestem pod wrażeniem" />
+        <input type="hidden" name="Id" value=@Model.series.ID />
+        <input type="submit" value="Dodaj renenzje" />
+    </form>
+    Dodaj ocene
+    <form action="~/Series/Addoceny" method="get">
+
+
+        <input type="number" name="Rate" value="3" />
+        <input type="hidden" name="Id" value=@Model.series.ID />
+        <input type="submit" value="Dodaj ocene" />
+    </form>
+    Dodaj Aktora do filmu
+    <form action="~/Series/Addaktora" method="get">
+        <select data-val="true" id="Idactor" name="Idactor">
+            @foreach (var item in Model.actors)
+            {
+                <option value=@item.ID>@item.Name @item.Surname</option>
+
+            }
+
+        </select>
+        <input type="hidden" name="IdSeries" value=@Model.series.ID />
+        <input type="submit" value="Dodaj aktora" />
+    </form>
+
+
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    
+    @Html.ActionLink("Edycja", "Edit", new { id = Model.series.ID }) |
+    @Html.ActionLink("Powrót do listy ", "Index")
 </p>

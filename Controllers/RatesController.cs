@@ -39,7 +39,8 @@ namespace Filmweb.Controllers
         // GET: Rates/Create
         public ActionResult Create()
         {
-            return View();
+            Rate model = new Rate();
+            return View(model);
         }
 
         // POST: Rates/Create
@@ -47,16 +48,70 @@ namespace Filmweb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,RateScore")] Rate rate)
+        public ActionResult Create(String  id,[Bind(Include = "ID,RateScore")] Rate rate)
         {
-            if (ModelState.IsValid)
+            if(id == null)
             {
-                db.Rates.Add(rate);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            if (id.Contains("movie"))
+            {
+                String ids = id.TrimStart("movie".ToCharArray());
+                int idm = 0;
+                idm = Int32.Parse(ids);
+                Movie movie = db.Movies.Find(idm);
+              
 
-            return View(rate);
+
+                    movie.Rates.Add(rate);
+                    int liczba = 0;
+                    int r = 0;
+                    foreach (var rate1 in movie.Rates)
+                    {
+                        r += rate1.RateScore;
+
+                        liczba++;
+                    }
+                    if (liczba != 0)
+                    {
+                        r /= liczba;
+                    }
+                    movie.Rate = r;
+                    db.Rates.Add(rate);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                
+            }
+            else
+            {
+                String ids = id.TrimStart("series".ToCharArray());
+                int idm = 0;
+                idm = Int32.Parse(ids);
+                Series series = db.TvSeries.Find(idm);
+              
+
+
+                    series.Rates.Add(rate);
+                    int liczba = 0;
+                    int r = 0;
+                    foreach (var rate1 in series.Rates)
+                    {
+                        r += rate1.RateScore;
+
+                        liczba++;
+                    }
+                    if (liczba != 0)
+                    {
+                        r /= liczba;
+                    }
+                    series.Rate = r;
+                    db.Rates.Add(rate);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                    
+                
+            }
+            return View();
         }
 
         // GET: Rates/Edit/5

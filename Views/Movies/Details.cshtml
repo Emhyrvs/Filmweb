@@ -1,37 +1,63 @@
-﻿@model Filmweb.Models.Movie
+﻿@model Filmweb.Models.Pomoc
 
 @{
     ViewBag.Title = "Details";
+
+
+    var ID = ViewBag.ID;
+
+
 }
 
-<h2>Details</h2>
+<h2>Szczególy filmu </h2>
 
 <div>
-    <h4>Movie</h4>
-    <hr />
+    <h4>Film</h4>
+
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            Obrazki
+        </dt>
+        <dd>
+            <img src="~/Obrazki/@Html.DisplayFor(model => model.movie.Obrazek) " height="200px" width="200px" />
+        </dd>
+        <dt>
+          Nazwa serialu 
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.movie.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Director)
+            Reżyser
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Director)
+            @Html.DisplayFor(model => model.movie.Director)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Length)
+          Długość w minutach 
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Length)
+            @Html.DisplayFor(model => model.movie.Length)
+        </dd>
+        <dt>
+           Ocena
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.movie.Rate)
+        </dd>
+        <dd>
+            Dodaj do ulubionych
+        </dd>
+        <dd>
+            <a href="@Url.Action("ulubione"+"/"+Model.movie.ID, "Profiles")">
+                <img src="~/Obrazki/serce.jpg" width="10px" height="10px">
+                <a />
+
         </dd>
 
         <dd>
@@ -39,24 +65,68 @@
                 <tr>
                     <th>Recenzje</th>
                 </tr>
-                @foreach (var item in Model.Reviews)
+                @foreach (var item in Model.movie.Reviews)
                 {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Content)
-                </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Content)
+                        </td>
 
-            </tr>
+                    </tr>
                 }
             </table>
+
+
+                       Dodaj recenzje 
+            <form action="~/Movies/Addrecenzje" method="get">
+
+                <input type="text" name="Title" placeholder="super" />
+                <input type="text" name="Content" placeholder="Bardzo ładnie jestem pod wrażeniem" />
+                <input type="hidden" name="Id" value=@Model.movie.ID />
+                <input type="submit" value="Dodaj renenzje" />
+            </form>
+                          Dodaj ocene
+            <form action="~/Movies/Addoceny" method="get">
+
+
+                <input type="number" name="Rate" value="3" />
+                <input type="hidden" name="Id" value=@Model.movie.ID />
+                <input type="submit" value="Dodaj ocene" />
+            </form>
+                      Dodaj Aktora do filmu  
+            <form action="~/Movies/Addaktora" method="get">
+                <select data-val="true" id="Idactor" name="Idactor">
+                    @foreach (var item in Model.actors)
+                    {
+                        <option value=@item.ID>@item.Name @item.Surname</option>
+
+                    }
+
+                </select>
+                <input type="hidden" name="IdMovie" value=@Model.movie.ID />
+                <input type="submit" value="Dodaj aktora" />
+            </form>
+
+
+            </p>
+            
+
+            <div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+
+            <li>@Html.ActionLink("Add Review", "Create" + "/" + "movie" + Model.movie.ID, "Reviews")</li>
+            <li>@Html.ActionLink("Rates", "Create" + "/" + "movie" + Model.movie.ID, "Rates")</li>
         </dd>
     </dl>
-    
+
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+
+    @Html.ActionLink("Edit", "Edit", new { id = Model.movie.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+

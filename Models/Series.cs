@@ -19,5 +19,10 @@ namespace Filmweb.Models
         public virtual List<Review> Reviews { get; set; }
 
         public String Obrazek { get; set; }
+        public int Rate { get; set; }
+   
+
+
+
     }
 }

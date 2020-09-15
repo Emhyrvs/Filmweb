@@ -2,12 +2,13 @@
 
 @{
     ViewBag.Title = "Create";
+
+
 }
+    <link href="~/Css/s" rel="stylesheet" type="text/css" />
+<h2>Zapisz</h2>z
 
-<h2>Create</h2>
-
-
-@using (Html.BeginForm("Create", "Actors", FormMethod.Post, new { enctype = "multipart/from-data" }))
+@using (Html.BeginForm("Create", "Actors", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -30,6 +31,14 @@
                 @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Obrazek, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="plikZObrazkiem" />
+                @Html.ValidationMessageFor(model => model.Obrazek, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -41,7 +50,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Stwórz" class="btn btn-default" />
             </div>
         </div>
     </div>

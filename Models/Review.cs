@@ -25,6 +25,6 @@ namespace Filmweb.Models
         public String Title { get; set; }
         [MaxLength(200),MinLength(10)]
         public String Content { get; set; }
-      
+       
     }
 }

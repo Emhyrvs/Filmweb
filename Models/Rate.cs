@@ -18,9 +18,11 @@ namespace Filmweb.Models
             ID = iD;
             RateScore = rateScore;
         }
-
+    
+        
         public int ID { get; set; }
-        [Range(1, 5)]
+        [Range(1, 6)]
+      
         public int RateScore { get; set; }
        
 

@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using Filmweb.Controllers;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Filmweb.Models
 {
+    
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
     }
 
     public class ExternalLoginListViewModel
@@ -101,7 +104,7 @@ namespace Filmweb.Models
 
         public string Code { get; set; }
     }
-
+   
     public class ForgotPasswordViewModel
     {
         [Required]

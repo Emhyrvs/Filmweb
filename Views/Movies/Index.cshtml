@@ -9,52 +9,53 @@
 
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Stwórz nowy ", "Create")
 </p>
 @using (Html.BeginForm("Index", "Movies", FormMethod.Get))
 {
     <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+       Znajdz po nazwie : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     </p>
 }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            Director
-        </th>
-        <th>
-            @Html.ActionLink("Length", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilte })
-        </th>
-        <th></th>
-    </tr>
+<ul class="actors">
+    
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
+    <li>
+
+        <a href="@Url.Action("Details"+"/"+item.ID, "Movies")">
+            <img class="actor-image" src="~/Obrazki/@item.Obrazek">
+            <a />
+           
+            <div class="a-1">
+                @Html.ActionLink("Nazwa", "Index", new { sortOrder = ViewBag.NameSortParm })
                 @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
+            </div>
+            <div class="a-2">
+              Reżyser
                 @Html.DisplayFor(modelItem => item.Director)
-            </td>
-            <td>
+            </div>
+            <div class="a-3">
+               Długość
                 @Html.DisplayFor(modelItem => item.Length)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
-        </tr>
+
+            </div>
+
+
+            <div>
+                @Html.ActionLink("Edycja", "Edit", new { id = item.ID }) |
+
+                @Html.ActionLink("Usuń", "Delete", new { id = item.ID })
+
+            </div>
+</li>
     }
 
-</table>
-<br />
+</ul>
+
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("Index",

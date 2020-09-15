@@ -14,9 +14,10 @@ namespace Filmweb.Models
         public String  Surname { get; set; }
         [Range(1,150)]
         public int Age { get; set; }
-        public virtual List<Movie>  Movies { get; set; }
-        public virtual List<Series> Series { get; set; }
+        public virtual List<Movie>   Movies { get; set; }
+        public virtual List<Series>  Series { get; set; }
         public String Obrazek { get; set; }
-
+        public String Movie { get; set; }
+        
     }
 }

@@ -1,45 +1,69 @@
-﻿@model IEnumerable<Filmweb.Models.Actor>
+﻿
+@model PagedList.IPagedList<Filmweb.Models.Actor>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
+
 }
 
-<h2>Index</h2>
+<h2>Aktorzy</h2>
+@using (Html.BeginForm("Index", "Actors", FormMethod.Get))
+{
+    <p>
+      Szukaj po imieniu i nazwisku : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
 
 <p>
+
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Surname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Age)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Surname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Age)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+<ul class="actors">
+    @foreach (var item in Model)
+    {
 
-</table>
+        <li>
+            <a href="@Url.Action("Details" + "/" + item.ID, "Actors")">
+                <img class="actor-image" src="~/Obrazki/@item.Obrazek">
+                <a />
+                <div class="actor-name">
+                    @Html.ActionLink("Imie", "Index", new { sortOrder = ViewBag.NameSortParm })  @Html.DisplayFor(modelItem => item.Name)
+                </div>
+                <div class="actor-surname">
+                    Nazwisko    @Html.DisplayFor(modelItem => item.Surname)
+                </div>
+                <div class="actor-age">
+                    Wiek  @Html.DisplayFor(modelItem => item.Age)
+                </div>
+                <div class="a-5">
+                    @Html.ActionLink("Filmy", "Index", new { sortOrder = ViewBag.NameSortParm }):   @Html.DisplayFor(modelItem => item.Movies.Count)
+                </div>
+                <div class="a-5">
+                   Liczba Seriali:   @Html.DisplayFor(modelItem => item.Series.Count)
+                </div>
+
+                <div>
+                    @Html.ActionLink("Edytuj", "Edit", new
+               {
+                   id = item.ID
+               }) |
+
+                    @Html.ActionLink("Usun", "Delete", new { id = item.ID })
+                </div>
+        </li>
+    }
+        </ul>
+
+    Strona @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+</ul>
+
+
